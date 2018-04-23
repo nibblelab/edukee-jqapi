@@ -113,7 +113,8 @@ var EdukeeAPI = {
             return;
         }
         
-        var url = EdukeeAPI.endPoint + '/download.php?isAPI=true&tipo=curso_logo&nome='+nome+'&curso='+curso_token+'&file='+file; 
+        var url = EdukeeAPI.endPoint + '/download.php?isAPI=true&tipo=curso_logo'+
+                '&nome='+nome+'&curso_id='+id+'&curso='+curso_token+'&file='+file; 
         
         jQuery.ajax({ 
             type: "GET",
