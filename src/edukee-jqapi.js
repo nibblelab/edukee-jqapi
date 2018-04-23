@@ -46,6 +46,7 @@ var EdukeeAPI = {
             url: url,
             success: function(data){        
                 if(data.status == 'ok') {
+                    EdukeeAPI.results.cursos = data.datas;
                     suc(data);
                 }
                 else {
