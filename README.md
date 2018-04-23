@@ -29,16 +29,25 @@ EdukeeAPI.init();
 
 ```
 EdukeeAPI.testToken(token, function(data) {
-    if(data.status == 'ok') {
-        // sucesso
-    }
-    else {
-        // erro
-        console.log('Falha ao testar as configurações: ' + data.msg);
-    }
+    // sucesso
 }, function(data) {
     // erro
     console.log('Falha ao testar as configurações: ' + data.msg);
+});
+```
+
+3 - Obtendo a lista de cursos ativos
+
+```
+pagina = '';
+tamanho_da_pagina = '';
+busca = '';
+ordenar = '';
+EdukeeAPI.getCursos(token, pagina, tamanho_da_pagina, busca, ordenar, function(data) {
+    // sucesso
+}, function(data) {
+    // erro
+    console.log('Erro: ' + data.msg);
 });
 ```
 

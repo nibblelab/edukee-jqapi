@@ -1,6 +1,11 @@
 
 var EdukeeAPI = {
     endPoint: 'https://www.edukee.com.br/api',
+    results: {
+        cursos: [],
+        curso: {},
+        campos_inscricao: []
+    },
     testToken: function(token, suc, err) {
         var url = EdukeeAPI.endPoint + '/integracao/test?token=' + token; 
         
@@ -11,7 +16,12 @@ var EdukeeAPI = {
             },
             url: url,
             success: function(data){        
-                suc(data);
+                if(data.status == 'ok') {
+                    suc();
+                }
+                else {
+                    err(data);
+                }
             },
             error: function(data){        
                 err(data);
@@ -35,7 +45,12 @@ var EdukeeAPI = {
             },
             url: url,
             success: function(data){        
-                suc(data);
+                if(data.status == 'ok') {
+                    suc(data);
+                }
+                else {
+                    err(data);
+                }
             },
             error: function(data){        
                 err(data);
@@ -44,7 +59,7 @@ var EdukeeAPI = {
         
     },
     init: function() {
-        console.log('*** Edukee plugin loaded *** ');
+        console.log('*** Edukee API loaded *** ');
         
     }
 };
