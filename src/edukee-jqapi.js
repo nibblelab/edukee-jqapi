@@ -6,6 +6,7 @@ var EdukeeAPI = {
         error: {},
         cursos: [],
         curso: {},
+        curso_img: {},
         campos_inscricao: []
     },
     testToken: function(suc, err) {
@@ -83,6 +84,67 @@ var EdukeeAPI = {
             }
         });
         
+    },
+    getCursoImg: function(id, suc, err) {
+        
+        var nome = '';
+        var curso_token = '';
+        var file = '';
+        for(var k in EdukeeAPI.results.cursos.datas) {
+            if(EdukeeAPI.results.cursos.datas[k].id == id) {
+                nome = EdukeeAPI.results.cursos.datas[k].nome;
+                curso_token = EdukeeAPI.results.cursos.datas[k].token;
+                file = EdukeeAPI.results.cursos.datas[k].imagem;
+                break;
+            }
+        }
+        
+        if(nome == '' || curso_token == '' || file == '') {
+            var error = {
+                status: 'no',
+                msg: 'Não consegui achar o curso na listage'
+            };
+            EdukeeAPI.results.error = error;
+            jQuery(document).trigger("edukee:get_curso_img");
+            if(err != undefined) {
+                err(error);
+            }
+            
+            return;
+        }
+        
+        var url = EdukeeAPI.endPoint + '/download.php?isAPI=true&tipo=curso_logo&nome='+nome+'&curso='+curso_token+'&file='+file; 
+        
+        jQuery.ajax({ 
+            type: "GET",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader ("Authorization", "token=" + EdukeeAPI.token);
+            },
+            url: url,
+            success: function(data){        
+                if(data.status == 'ok') {
+                    EdukeeAPI.results.curso_img = data;
+                    jQuery(document).trigger("edukee:get_curso_img");
+                    if(suc != undefined) {
+                        suc(data);
+                    }
+                }
+                else {
+                    EdukeeAPI.results.error = data;
+                    jQuery(document).trigger("edukee:get_curso_img");
+                    if(err != undefined) {
+                        err(data);
+                    }
+                }
+            },
+            error: function(data){   
+                EdukeeAPI.results.error = data;
+                jQuery(document).trigger("edukee:get_curso_img");
+                if(err != undefined) {
+                    err(data);
+                }
+            }
+        });
     },
     init: function(token) {
         
