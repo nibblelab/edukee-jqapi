@@ -1,20 +1,21 @@
 
 var EdukeeAPI = {
     endPoint: 'https://www.edukee.com.br/api',
+    token: '',
     results: {
         error: {},
         cursos: [],
         curso: {},
         campos_inscricao: []
     },
-    testToken: function(token, suc, err) {
+    testToken: function(suc, err) {
         
-        var url = EdukeeAPI.endPoint + '/integracao/test?token=' + token; 
+        var url = EdukeeAPI.endPoint + '/integracao/test?token=' + EdukeeAPI.token; 
         
         jQuery.ajax({ 
             type: "GET",
             beforeSend: function (xhr) {
-                xhr.setRequestHeader ("Authorization", "token=" + token);
+                xhr.setRequestHeader ("Authorization", "token=" + EdukeeAPI.token);
             },
             url: url,
             success: function(data){        
@@ -41,7 +42,7 @@ var EdukeeAPI = {
             }
         });
     },
-    getCursos: function(token, page, pagesize, searchBy, orderBy, suc, err) {
+    getCursos: function(page, pagesize, searchBy, orderBy, suc, err) {
         
         var pg = (page == undefined) ? '' : page;
         var ps = (pagesize == undefined) ? '' : pagesize;
@@ -54,7 +55,7 @@ var EdukeeAPI = {
         jQuery.ajax({ 
             type: "GET",
             beforeSend: function (xhr) {
-                xhr.setRequestHeader ("Authorization", "token=" + token);
+                xhr.setRequestHeader ("Authorization", "token=" + EdukeeAPI.token);
             },
             url: url,
             success: function(data){        
@@ -83,7 +84,10 @@ var EdukeeAPI = {
         });
         
     },
-    init: function() {
+    init: function(token) {
+        
+        EdukeeAPI.token = token;
+        
         console.log('*** Edukee API loaded *** ');
         
     }

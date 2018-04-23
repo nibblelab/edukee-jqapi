@@ -52,7 +52,7 @@ de  EdukeeAPI.results
 1 - Inicializando
 
 ```
-EdukeeAPI.init();
+EdukeeAPI.init(token);
 ```
 
 2 - Verificando o token da API
@@ -60,7 +60,7 @@ EdukeeAPI.init();
 via callback:
 
 ```
-EdukeeAPI.testToken(token, function() {
+EdukeeAPI.testToken(function() {
     // sucesso
 }, function(data) {
     // erro
@@ -80,7 +80,7 @@ $(document).on('edukee:token_test_error', function() {
     console.log('Falha ao testar as configurações: ' + EdukeeAPI.results.error.msg);
 });
 
-EdukeeAPI.testToken(token);
+EdukeeAPI.testToken();
 ```
 
 
@@ -93,7 +93,7 @@ pagina = '';
 tamanho_da_pagina = '';
 busca = '';
 ordenar = '';
-EdukeeAPI.getCursos(token, pagina, tamanho_da_pagina, busca, ordenar, function(data) {
+EdukeeAPI.getCursos(pagina, tamanho_da_pagina, busca, ordenar, function(data) {
     // sucesso
     for(var k in data.datas) {
         // itere a lista de resultados
@@ -123,7 +123,7 @@ pagina = '';
 tamanho_da_pagina = '';
 busca = '';
 ordenar = '';
-EdukeeAPI.getCursos(token, pagina, tamanho_da_pagina, busca, ordenar);
+EdukeeAPI.getCursos(pagina, tamanho_da_pagina, busca, ordenar);
 ```
 
 
