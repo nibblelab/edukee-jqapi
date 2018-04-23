@@ -35,7 +35,7 @@ ou isso
 
 ```
 
-$.on('edukee:algum_evento', function() {
+$(document).on('edukee:algum_evento', function() {
     // implemente aqui o handler do vento
 });
 
@@ -71,11 +71,11 @@ EdukeeAPI.testToken(token, function() {
 via eventos:
 
 ```
-$.on('edukee:token_test_success', function() {
+$(document).on('edukee:token_test_success', function() {
     // deu certo 
 });
 
-$.on('edukee:token_test_error', function() {
+$(document).on('edukee:token_test_error', function() {
     // deu erro. Veja o que está em EdukeeAPI.results.error para mais detalhes
     console.log('Falha ao testar as configurações: ' + EdukeeAPI.results.error.msg);
 });
@@ -107,14 +107,14 @@ EdukeeAPI.getCursos(token, pagina, tamanho_da_pagina, busca, ordenar, function(d
 via eventos:
 
 ```
-$.on('edukee:get_cursos_success', function() {
+$(document).on('edukee:get_cursos_success', function() {
     // deu certo 
     for(var k in EdukeeAPI.results.cursos.datas) {
         // itere a lista de resultados
     }
 });
 
-$.on('edukee:get_cursos_error', function() {
+$(document).on('edukee:get_cursos_error', function() {
     // deu erro. Veja o que está em EdukeeAPI.results.error para mais detalhes
     console.log('Erro: ' + EdukeeAPI.results.error.msg);
 });
