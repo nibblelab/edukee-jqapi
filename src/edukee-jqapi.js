@@ -2,6 +2,7 @@
 var EdukeeAPI = {
     endPoint: 'https://www.edukee.com.br/api',
     results: {
+        error: {},
         cursos: [],
         curso: {},
         campos_inscricao: []
@@ -17,14 +18,25 @@ var EdukeeAPI = {
             url: url,
             success: function(data){        
                 if(data.status == 'ok') {
-                    suc();
+                    jQuery.trigger("edukee:token_test_success");
+                    if(suc != undefined) {
+                        suc();
+                    }
                 }
                 else {
-                    err(data);
+                    jQuery.trigger("edukee:token_test_error");
+                    EdukeeAPI.results.error = data;
+                    if(err != undefined) {
+                        err(data);
+                    }
                 }
             },
-            error: function(data){        
-                err(data);
+            error: function(data){ 
+                jQuery.trigger("edukee:token_test_error");
+                EdukeeAPI.results.error = data;
+                if(err != undefined) {
+                    err(data);
+                }
             }
         });
     },
@@ -46,15 +58,26 @@ var EdukeeAPI = {
             url: url,
             success: function(data){        
                 if(data.status == 'ok') {
-                    EdukeeAPI.results.cursos = data.datas;
-                    suc(data);
+                    EdukeeAPI.results.cursos = data;
+                    jQuery.trigger("edukee:get_cursos_success");
+                    if(suc != undefined) {
+                        suc(data);
+                    }
                 }
                 else {
-                    err(data);
+                    jQuery.trigger("edukee:get_cursos_error");
+                    EdukeeAPI.results.error = data;
+                    if(err != undefined) {
+                        err(data);
+                    }
                 }
             },
-            error: function(data){        
-                err(data);
+            error: function(data){   
+                jQuery.trigger("edukee:get_cursos_error");
+                EdukeeAPI.results.error = data;
+                if(err != undefined) {
+                    err(data);
+                }
             }
         });
         
