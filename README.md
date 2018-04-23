@@ -119,7 +119,11 @@ $.on('edukee:get_cursos_error', function() {
     console.log('Erro: ' + EdukeeAPI.results.error.msg);
 });
 
-EdukeeAPI.testToken(token);
+pagina = '';
+tamanho_da_pagina = '';
+busca = '';
+ordenar = '';
+EdukeeAPI.getCursos(token, pagina, tamanho_da_pagina, busca, ordenar);
 ```
 
 
