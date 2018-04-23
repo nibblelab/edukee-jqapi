@@ -105,7 +105,7 @@ var EdukeeAPI = {
                 msg: 'Não consegui achar o curso na listage'
             };
             EdukeeAPI.results.error = error;
-            jQuery(document).trigger("edukee:get_curso_img");
+            jQuery(document).trigger("edukee:get_curso_img_error");
             if(err != undefined) {
                 err(error);
             }
@@ -125,14 +125,14 @@ var EdukeeAPI = {
             success: function(data){        
                 if(data.status == 'ok') {
                     EdukeeAPI.results.curso_img = data;
-                    jQuery(document).trigger("edukee:get_curso_img");
+                    jQuery(document).trigger("edukee:get_curso_img_success");
                     if(suc != undefined) {
                         suc(data);
                     }
                 }
                 else {
                     EdukeeAPI.results.error = data;
-                    jQuery(document).trigger("edukee:get_curso_img");
+                    jQuery(document).trigger("edukee:get_curso_img_error");
                     if(err != undefined) {
                         err(data);
                     }
@@ -140,7 +140,7 @@ var EdukeeAPI = {
             },
             error: function(data){   
                 EdukeeAPI.results.error = data;
-                jQuery(document).trigger("edukee:get_curso_img");
+                jQuery(document).trigger("edukee:get_curso_img_error");
                 if(err != undefined) {
                     err(data);
                 }
