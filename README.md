@@ -450,7 +450,7 @@ Existe nesse caso um marcador para indicar o nome do campo como especificado no 
 <field>Label do Campo</field>
 ```
 
-Substitua o ***<field>*** pelo que considerar mais adequado
+Substitua o marcador pelo que considerar mais adequado
 
 ## License
 
