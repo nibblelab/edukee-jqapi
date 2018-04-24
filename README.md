@@ -16,7 +16,7 @@ bower install edukee-jqapi
 
 O cliente depende de jquery, então essa biblioteca deve estar incluída no seu projeto antes do edukee jqapi
 
-### Introdução
+## Introdução
 
 O cliente jquery implementa as requisições REST à API do Edukee e colhe os retornos que podem ser processados logo
 após o retorno da API via callback na chamada ou via eventos.
@@ -46,16 +46,16 @@ EdukeeAPI.metodo(token, [parâmetros]);
 No caso de usar os eventos, você pode acessar o resultado das requisições (as que tem resultado) dentro
 de  EdukeeAPI.results
 
-### Uso
+## Uso
 
 
-1 - Inicializando
+### Inicializando
 
 ```
 EdukeeAPI.init(token);
 ```
 
-2 - Verificando o token da API
+### Verificando o token da API
 
 via callback:
 
@@ -83,8 +83,7 @@ $(document).on('edukee:token_test_error', function() {
 EdukeeAPI.testToken();
 ```
 
-
-3 - Obtendo a lista de cursos ativos
+### Obtendo a lista de cursos ativos
 
 via callback:
 
@@ -126,6 +125,36 @@ ordenar = '';
 EdukeeAPI.getCursos(pagina, tamanho_da_pagina, busca, ordenar);
 ```
 
+### Obtendo os dados de um curso por seu id
+
+via callback: 
+
+```
+EdukeeAPI.getCurso(curso_id, function(data) {
+    // sucesso
+    
+}, function(data) {
+    // erro
+    console.log('Erro: ' + data.msg);
+});
+
+```
+
+via eventos:
+
+```
+$(document).on('edukee:get_curso_success', function() {
+    // deu certo - dados em EdukeeAPI.results.curso
+});
+
+$(document).on('edukee:get_curso_error"', function() {
+    // deu erro. Veja o que está em EdukeeAPI.results.error para mais detalhes
+    console.log('Erro: ' + EdukeeAPI.results.error.msg);
+});
+
+EdukeeAPI.getCurso(curso_id);
+
+```
 
 
 ## License
