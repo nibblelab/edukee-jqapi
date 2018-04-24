@@ -363,26 +363,39 @@ formulario = [
 Os tipos possíveis para o campo são:
 
 **text** - texto genérico
+
 **year** - informação de ano. Ex: 1988
+
 **date** - informação de data no padrão DD/MM/YYYY. Ex: 22/07/1988
+
 **email** - informação de e-mail
+
 **password** - senha. Deve ter pelo menos 6 caracteres e conter caracteres maiúsculos, minúsculos, números e caracteres especiais como @,!,#
+
 **cpf** - CPF no formato 999.999.999-99
+
 **sex** - campo de seleção para: M - Masculino; F - Feminino
+
 **uf** - campo de seleção para as unidades federativas do Brasil
+
 **cep** - CEP no formato 99.999-999
+
 **marital** - campo de seleção para: SOL - Solteiro(a); CAS - Casado(a); DIV - Divorciado(a); VIU - Viúvo(a)
+
 **phone** - campo de telefone no formato (99) 9999-9999
+
 **cellphone** - campo de celular no formato (99) 9 9999-9999
 
-Um campo marcado como necessary será obrigatóriamente cobrado pelo Edukee. Então campos assim **devem** ser enviados
+O Edukee usa esses tipos para validar os dados enviados pelos usuários
+
+Um campo marcado como **necessary** será obrigatóriamente cobrado pelo Edukee. Então campos assim **devem** ser enviados
 preenchidos para o Edukee ou o mesmo acusará erro
 
-Um campo marcado como oblige é um campo não necessário que foi marcado como obrigatório pelo usuário que configurou
+Um campo marcado como **oblige** é um campo não necessário que foi marcado como obrigatório pelo usuário que configurou
 o formulário de inscrição. O comportamento é parecido com o do necessary, com a diferença que a obrigatoriedade nesse
 caso foi definida pelo usuário do Edukee e não pelo Edukee em si
 
-Um campo marcado como checked foi selecionado pelo usuário que configurou o formulário de inscrição para compor o formulário,
+Um campo marcado como **checked** foi selecionado pelo usuário que configurou o formulário de inscrição para compor o formulário,
 porém tem seu preenchimento opcional. 
 
 ### Enviando o formulário de inscrição preenchido
@@ -405,7 +418,7 @@ via callback:
 
 ```
 EdukeeAPI.doInscricao(curso_id, turma_id, campos, function() {
-    // deu cetro
+    // deu certo
 }, function(err) {
     // deu erro
     console.log(err);
@@ -426,6 +439,18 @@ $(document).on('edukee:do_inscricao_error', function() {
 
 EdukeeAPI.doInscricao(curso_id, turma_id, campos);
 ```
+
+No retorno de erros desse método há um campo adicional, o **errors** que é um array com os erros
+verificados na validação dos dados enviados pelo usuário no formulário. Você pode iterar sobre ele
+para compor uma resposta mais amigável ao usuário. 
+
+Existe nesse caso um marcador para indicar o nome do campo como especificado no label (obtido no método anterior):
+
+```
+<field>Label do Campo</field>
+```
+
+Substitua o ***<field>*** pelo que considerar mais adequado
 
 ## License
 
