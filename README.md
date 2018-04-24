@@ -362,28 +362,17 @@ formulario = [
 
 Os tipos possíveis para o campo são:
 
-**text** - texto genérico
-
-**year** - informação de ano. Ex: 1988
-
-**date** - informação de data no padrão DD/MM/YYYY. Ex: 22/07/1988
-
-**email** - informação de e-mail
-
-**password** - senha. Deve ter pelo menos 6 caracteres e conter caracteres maiúsculos, minúsculos, números e caracteres especiais como @,!,#
-
-**cpf** - CPF no formato 999.999.999-99
-
-**sex** - campo de seleção para: M - Masculino; F - Feminino
-
-**uf** - campo de seleção para as unidades federativas do Brasil
-
-**cep** - CEP no formato 99.999-999
-
-**marital** - campo de seleção para: SOL - Solteiro(a); CAS - Casado(a); DIV - Divorciado(a); VIU - Viúvo(a)
-
-**phone** - campo de telefone no formato (99) 9999-9999
-
+**text** - texto genérico  
+**year** - informação de ano. Ex: 1988  
+**date** - informação de data no padrão DD/MM/YYYY. Ex: 22/07/1988  
+**email** - informação de e-mail  
+**password** - senha. Deve ter pelo menos 6 caracteres e conter caracteres maiúsculos, minúsculos, números e caracteres especiais como @,!,#  
+**cpf** - CPF no formato 999.999.999-99  
+**sex** - campo de seleção para: M - Masculino; F - Feminino  
+**uf** - campo de seleção para as unidades federativas do Brasil  
+**cep** - CEP no formato 99.999-999  
+**marital** - campo de seleção para: SOL - Solteiro(a); CAS - Casado(a); DIV - Divorciado(a); VIU - Viúvo(a)  
+**phone** - campo de telefone no formato (99) 9999-9999  
 **cellphone** - campo de celular no formato (99) 9 9999-9999
 
 O Edukee usa esses tipos para validar os dados enviados pelos usuários
