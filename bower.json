@@ -3,7 +3,7 @@
   "authors": [
     "Johnatas [Njerbaden] Teixeira de Freitas <johnatas@nibblelab.com>"
   ],
-  "description": "Cliente Jquery da API REST da plataforma de EAD Edukee",
+  "description": "SDK Jquery da API REST da plataforma de EAD Edukee",
   "main": [
     "src/edukee-jqapi.js"
   ],

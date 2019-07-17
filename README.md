@@ -1,6 +1,6 @@
 # Edukee JqAPI
 
-Cliente jquery da API REST da plataforma de EAD Edukee
+SDK jquery da API REST da plataforma de EAD Edukee
 
 ## Instalação
 
@@ -14,24 +14,24 @@ bower install edukee-jqapi
 <script src="bower_components/edukee-jqapi/dist/edukee-jqapi.min.js"></script>
 ```
 
-O cliente depende de jquery, então essa biblioteca deve estar incluída no seu projeto antes do edukee jqapi
+O SDK depende do jquery, então essa biblioteca deve estar incluída no seu projeto antes do SDK.
 
 ## Introdução
 
-O cliente jquery implementa as requisições REST à API do Edukee e colhe os retornos que podem ser processados logo
-após o retorno da API via callback na chamada ou via eventos.
+O SDK jquery implementa as requisições REST à API do Edukee e colhe os retornos que podem ser processados logo
+após o retorno da API via callback ou via eventos.
 
-Dessa forma você poderá colher o retorno da API usando isso
+Dessa forma você poderá colher o retorno da API, por esta forma:
 
 ```
-EdukeeAPI.metodo(token, [parâmetros], function(data) {
+EdukeeSDK.metodo(token, [parâmetros], function(data) {
     // implemente aqui o corpo da callback de sucesso
 }, function(data) {
     // implemente aqui o corpo da callback de erro
 });
 ```
 
-ou isso
+ou esta:
 
 ```
 
@@ -40,27 +40,56 @@ $(document).on('edukee:algum_evento', function() {
 });
 
 
-EdukeeAPI.metodo(token, [parâmetros]);
+EdukeeSDK.metodo(token, [parâmetros]);
 ```
 
 No caso de usar os eventos, você pode acessar o resultado das requisições (as que tem resultado) dentro
-de  EdukeeAPI.results
+de  EdukeeSDK.results
 
 ## Uso
 
 
 ### Inicializando
 
-```
-EdukeeAPI.init(token);
-```
 
-### Verificando o token da API
+Inicialize o SDK com o token da sua instituição, para obter o token da API
 
 via callback:
 
 ```
-EdukeeAPI.testToken(function() {
+EdukeeSDK.init(token_instituicao, function() {
+    // sucesso
+}, function(data) {
+    // erro
+    console.log('Falha ao inicializar o SDK: ' + data.msg);
+});
+```
+
+via eventos:
+
+```
+$(document).on('edukee:login_instituicao_success', function() {
+    // deu certo 
+});
+
+$(document).on('edukee:login_instituicao_error', function() {
+    // deu erro. Veja o que está em EdukeeSDK.results.error para mais detalhes
+    console.log('Falha ao inicializar o SDK: ' + EdukeeSDK.results.error.msg);
+});
+
+EdukeeSDK.init(token_instituicao);
+```
+
+Uma vez que o SDK está inicializado é possível executar as demais operações providas na API
+
+
+### Verificando o token da API
+
+
+via callback:
+
+```
+EdukeeSDK.testToken(function() {
     // sucesso
 }, function(data) {
     // erro
@@ -76,11 +105,11 @@ $(document).on('edukee:token_test_success', function() {
 });
 
 $(document).on('edukee:token_test_error', function() {
-    // deu erro. Veja o que está em EdukeeAPI.results.error para mais detalhes
-    console.log('Falha ao testar as configurações: ' + EdukeeAPI.results.error.msg);
+    // deu erro. Veja o que está em EdukeeSDK.results.error para mais detalhes
+    console.log('Falha ao testar as configurações: ' + EdukeeSDK.results.error.msg);
 });
 
-EdukeeAPI.testToken();
+EdukeeSDK.testToken();
 ```
 
 ### Obtendo a lista de cursos ativos
@@ -92,7 +121,7 @@ pagina = '';
 tamanho_da_pagina = '';
 busca = '';
 ordenar = '';
-EdukeeAPI.getCursos(pagina, tamanho_da_pagina, busca, ordenar, function(data) {
+EdukeeSDK.getCursos(pagina, tamanho_da_pagina, busca, ordenar, function(data) {
     // sucesso
     for(var k in data.datas) {
         // itere a lista de resultados
@@ -108,21 +137,21 @@ via eventos:
 ```
 $(document).on('edukee:get_cursos_success', function() {
     // deu certo 
-    for(var k in EdukeeAPI.results.cursos.datas) {
+    for(var k in EdukeeSDK.results.cursos.datas) {
         // itere a lista de resultados
     }
 });
 
 $(document).on('edukee:get_cursos_error', function() {
-    // deu erro. Veja o que está em EdukeeAPI.results.error para mais detalhes
-    console.log('Erro: ' + EdukeeAPI.results.error.msg);
+    // deu erro. Veja o que está em EdukeeSDK.results.error para mais detalhes
+    console.log('Erro: ' + EdukeeSDK.results.error.msg);
 });
 
 pagina = '';
 tamanho_da_pagina = '';
 busca = '';
 ordenar = '';
-EdukeeAPI.getCursos(pagina, tamanho_da_pagina, busca, ordenar);
+EdukeeSDK.getCursos(pagina, tamanho_da_pagina, busca, ordenar);
 ```
 
 ### Obtendo os dados de um curso por seu id
@@ -130,7 +159,7 @@ EdukeeAPI.getCursos(pagina, tamanho_da_pagina, busca, ordenar);
 via callback: 
 
 ```
-EdukeeAPI.getCurso(curso_id, function(data) {
+EdukeeSDK.getCurso(curso_id, function(data) {
     // sucesso
     
 }, function(data) {
@@ -144,15 +173,15 @@ via eventos:
 
 ```
 $(document).on('edukee:get_curso_success', function() {
-    // deu certo - dados em EdukeeAPI.results.curso
+    // deu certo - dados em EdukeeSDK.results.curso
 });
 
 $(document).on('edukee:get_curso_error', function() {
-    // deu erro. Veja o que está em EdukeeAPI.results.error para mais detalhes
-    console.log('Erro: ' + EdukeeAPI.results.error.msg);
+    // deu erro. Veja o que está em EdukeeSDK.results.error para mais detalhes
+    console.log('Erro: ' + EdukeeSDK.results.error.msg);
 });
 
-EdukeeAPI.getCurso(curso_id);
+EdukeeSDK.getCurso(curso_id);
 
 ```
 
@@ -161,7 +190,7 @@ EdukeeAPI.getCurso(curso_id);
 via callback: 
 
 ```
-EdukeeAPI.getCursoImg(curso_id, function(img) {
+EdukeeSDK.getCursoImg(curso_id, function(img) {
     // deu certo
 }, function(err) {
     // deu erro
@@ -173,15 +202,15 @@ via eventos:
 
 ```
 $(document).on('edukee:get_curso_img_success', function() {
-    // deu certo - dados em EdukeeAPI.results.curso_img
+    // deu certo - dados em EdukeeSDK.results.curso_img
 });
 
 $(document).on('edukee:get_curso_img_error', function() {
-    // deu erro. Veja o que está em EdukeeAPI.results.error para mais detalhes
-    console.log('Erro: ' + EdukeeAPI.results.error.msg);
+    // deu erro. Veja o que está em EdukeeSDK.results.error para mais detalhes
+    console.log('Erro: ' + EdukeeSDK.results.error.msg);
 });
 
-EdukeeAPI.getCursoImg(curso_id);
+EdukeeSDK.getCursoImg(curso_id);
 
 ```
 
@@ -194,7 +223,7 @@ pagina = '';
 tamanho_da_pagina = '';
 busca = '';
 ordenar = '';
-EdukeeAPI.getTurmas(curso_id, pagina, tamanho_da_pagina, busca, ordenar, function(data) {
+EdukeeSDK.getTurmas(curso_id, pagina, tamanho_da_pagina, busca, ordenar, function(data) {
     // deu certo
     for(var k in data.datas) {
         // itere a lista de resultados
@@ -209,18 +238,18 @@ via eventos:
 
 ```
 $(document).on('edukee:get_turmas_success', function() {
-    // deu certo - dados em EdukeeAPI.results.turmas
-    for(var k in EdukeeAPI.results.turmas.datas) {
+    // deu certo - dados em EdukeeSDK.results.turmas
+    for(var k in EdukeeSDK.results.turmas.datas) {
         // itere a lista de resultados
     }
 });
 
 $(document).on('edukee:get_turmas_error', function() {
-    // deu erro. Veja o que está em EdukeeAPI.results.error para mais detalhes
-    console.log('Erro: ' + EdukeeAPI.results.error.msg);
+    // deu erro. Veja o que está em EdukeeSDK.results.error para mais detalhes
+    console.log('Erro: ' + EdukeeSDK.results.error.msg);
 });
 
-EdukeeAPI.getTurmas(curso_id, pagina, tamanho_da_pagina, busca, ordenar);
+EdukeeSDK.getTurmas(curso_id, pagina, tamanho_da_pagina, busca, ordenar);
 
 ```
 
@@ -229,7 +258,7 @@ EdukeeAPI.getTurmas(curso_id, pagina, tamanho_da_pagina, busca, ordenar);
 via callback: 
 
 ```
-EdukeeAPI.getTurma(turma_id, function(data) {
+EdukeeSDK.getTurma(turma_id, function(data) {
     // sucesso
     
 }, function(data) {
@@ -243,15 +272,15 @@ via eventos:
 
 ```
 $(document).on('edukee:get_turma_success', function() {
-    // deu certo - dados em EdukeeAPI.results.turma
+    // deu certo - dados em EdukeeSDK.results.turma
 });
 
 $(document).on('edukee:get_turma_error"', function() {
-    // deu erro. Veja o que está em EdukeeAPI.results.error para mais detalhes
-    console.log('Erro: ' + EdukeeAPI.results.error.msg);
+    // deu erro. Veja o que está em EdukeeSDK.results.error para mais detalhes
+    console.log('Erro: ' + EdukeeSDK.results.error.msg);
 });
 
-EdukeeAPI.getTurma(turma_id);
+EdukeeSDK.getTurma(turma_id);
 
 ```
 
@@ -260,7 +289,7 @@ EdukeeAPI.getTurma(turma_id);
 via callback: 
 
 ```
-EdukeeAPI.getTurmaImg(turma_id, function(img) {
+EdukeeSDK.getTurmaImg(turma_id, function(img) {
     // deu certo
 }, function(err) {
     // deu erro
@@ -272,15 +301,15 @@ via eventos:
 
 ```
 $(document).on('edukee:get_turma_img_success', function() {
-    // deu certo - dados em EdukeeAPI.results.turma_img
+    // deu certo - dados em EdukeeSDK.results.turma_img
 });
 
 $(document).on('edukee:get_turma_img_error', function() {
-    // deu erro. Veja o que está em EdukeeAPI.results.error para mais detalhes
-    console.log('Erro: ' + EdukeeAPI.results.error.msg);
+    // deu erro. Veja o que está em EdukeeSDK.results.error para mais detalhes
+    console.log('Erro: ' + EdukeeSDK.results.error.msg);
 });
 
-EdukeeAPI.getTurmaImg(turma_id);
+EdukeeSDK.getTurmaImg(turma_id);
 
 ```
 
@@ -289,7 +318,7 @@ EdukeeAPI.getTurmaImg(turma_id);
 via callback: 
 
 ```
-EdukeeAPI.getTurmaContrato(turma_id, function(contrato) {
+EdukeeSDK.getTurmaContrato(turma_id, function(contrato) {
     // deu certo
 }, function(err) {
     // deu erro
@@ -301,15 +330,15 @@ via eventos:
 
 ```
 $(document).on('edukee:get_turma_contrato_success', function() {
-    // deu certo - dados em EdukeeAPI.results.turma_contrato
+    // deu certo - dados em EdukeeSDK.results.turma_contrato
 });
 
 $(document).on('edukee:get_turma_contrato_error', function() {
-    // deu erro. Veja o que está em EdukeeAPI.results.error para mais detalhes
-    console.log('Erro: ' + EdukeeAPI.results.error.msg);
+    // deu erro. Veja o que está em EdukeeSDK.results.error para mais detalhes
+    console.log('Erro: ' + EdukeeSDK.results.error.msg);
 });
 
-EdukeeAPI.getTurmaContrato(turma_id);
+EdukeeSDK.getTurmaContrato(turma_id);
 
 ```
 
@@ -322,7 +351,7 @@ preenchido. Esse método descrito aqui é para obter do Edukee o formulário de 
 via callback:
 
 ```
-EdukeeAPI.getInscricaoForm(curso_id, function(formulario) {
+EdukeeSDK.getInscricaoForm(curso_id, function(formulario) {
     // deu certo - formulario é um array
 }, function(err) {
     // deu erro
@@ -334,15 +363,15 @@ via eventos:
 
 ```
 $(document).on('edukee:get_inscricao_form_success', function() {
-    // deu certo - dados em EdukeeAPI.results.campos_inscricao
+    // deu certo - dados em EdukeeSDK.results.campos_inscricao
 });
 
 $(document).on('edukee:get_inscricao_form_error', function() {
-    // deu erro. Veja o que está em EdukeeAPI.results.error para mais detalhes
-    console.log('Erro: ' + EdukeeAPI.results.error.msg);
+    // deu erro. Veja o que está em EdukeeSDK.results.error para mais detalhes
+    console.log('Erro: ' + EdukeeSDK.results.error.msg);
 });
 
-EdukeeAPI.getInscricaoForm(curso_id);
+EdukeeSDK.getInscricaoForm(curso_id);
 ```
 
 Em ambos os casos, o formulário é um array no seguinte padrão:
@@ -382,7 +411,7 @@ preenchidos para o Edukee ou o mesmo acusará erro
 
 Um campo marcado como **oblige** é um campo não necessário que foi marcado como obrigatório pelo usuário que configurou
 o formulário de inscrição. O comportamento é parecido com o do necessary, com a diferença que a obrigatoriedade nesse
-caso foi definida pelo usuário do Edukee e não pelo Edukee em si
+caso foi definida pela instituição usuária do Edukee e não pelo Edukee em si.
 
 Um campo marcado como **checked** foi selecionado pelo usuário que configurou o formulário de inscrição para compor o formulário,
 porém tem seu preenchimento opcional. 
@@ -406,7 +435,7 @@ campos = [
 via callback:
 
 ```
-EdukeeAPI.doInscricao(curso_id, turma_id, campos, function() {
+EdukeeSDK.doInscricao(curso_id, turma_id, campos, function() {
     // deu certo
 }, function(err) {
     // deu erro
@@ -422,11 +451,11 @@ $(document).on('edukee:do_inscricao_success', function() {
 });
 
 $(document).on('edukee:do_inscricao_error', function() {
-    // deu erro. Veja o que está em EdukeeAPI.results.error para mais detalhes
-    console.log('Erro: ' + EdukeeAPI.results.error.msg);
+    // deu erro. Veja o que está em EdukeeSDK.results.error para mais detalhes
+    console.log('Erro: ' + EdukeeSDK.results.error.msg);
 });
 
-EdukeeAPI.doInscricao(curso_id, turma_id, campos);
+EdukeeSDK.doInscricao(curso_id, turma_id, campos);
 ```
 
 No retorno de erros desse método há um campo adicional, o **errors** que é um array com os erros
